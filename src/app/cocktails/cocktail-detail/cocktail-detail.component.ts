@@ -22,7 +22,7 @@ export class CocktailDetailComponent implements OnInit {
       setTimeout(() => {
         innerWidth < 768
           ? window.scrollTo({
-              top: document.body.scrollHeight,
+              top: 0,
               behavior: 'smooth',
             })
           : window.scrollTo({ top: 0, behavior: 'smooth' });

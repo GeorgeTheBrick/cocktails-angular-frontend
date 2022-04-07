@@ -41,6 +41,7 @@ export class HeaderComponent implements OnInit {
       relativeTo: this.route,
       queryParams: { search: '??' },
     });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   public onSubmit() {
