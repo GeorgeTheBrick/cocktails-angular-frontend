@@ -1,0 +1,116 @@
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-color">
+  <div class="container-fluid">
+    <a href="">
+      <img class="brand-logo" src="/assets/cocktailLogo.png" alt="brand logo"
+    /></a>
+    <div class="navbar-nav"></div>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      (click)="collapsed = !collapsed"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+      class="collapse navbar-collapse nav-end"
+      id="navbarNav"
+      [class.collapse]="collapsed"
+    >
+      <ul class="navbar-nav nav-gap">
+        <li class="nav-item">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="alcoholic"
+              (click)="onAlcoholicCheck(alcoholic, null)"
+              [checked]="alcoholic"
+              [disabled]="disabledAlcoholic"
+            />
+            <label class="form-check-label" for="alcoholic"> Alcoholic </label>
+          </div>
+
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="nonAlcoholic"
+              (click)="onAlcoholicCheck(null, nonAlcoholic)"
+              [checked]="nonAlcoholic"
+              [disabled]="disabledNonAlcoholic"
+            />
+            <label class="form-check-label" for="nonAlcoholic">
+              Non Alcoholic
+            </label>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            aria-current="sort"
+            style="cursor: pointer"
+            (click)="onSort()"
+            >Sort by Name
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-caret-{{ sort ? 'up' : 'down' }}"
+              viewBox="0 0 16 16"
+            >
+              <path [attr.d]="sort ? icon.arrowUp : icon.arrowDown" />
+            </svg>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            aria-current="random"
+            style="cursor: pointer"
+            (click)="onRandom()"
+            >Random Cocktail</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link home-button"
+            aria-current="home"
+            style="cursor: pointer"
+            (click)="onHome()"
+            >Home</a
+          >
+        </li>
+        <li class="nav-item">
+          <form
+            #sform="ngForm"
+            class="d-flex search-form"
+            (ngSubmit)="onSubmit()"
+          >
+            <input
+              type="search"
+              aria-describedby="inputGroupPrepend2"
+              [placeholder]="'Search Cocktails'"
+              class="form-control me-2"
+              name="search"
+              ngModel
+              required
+            />
+
+            <button type="submit" class="btn btn-outline-success">
+              Search
+            </button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

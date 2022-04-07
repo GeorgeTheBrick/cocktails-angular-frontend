@@ -1,0 +1,100 @@
+<div class="bottom-margin shadow-box center-align">
+  <h3>Welcome to our Cocktail Application!</h3>
+  <p>A simple app, where you can find all your favourite cocktails</p>
+  <hr />
+  <div class="content-wrap">
+    <div class="content">
+      <p></p>
+      <p>With this app, you can:</p>
+      <ul class="left-align">
+        <li>Search cocktails by name, ingredient or ID</li>
+        <li>Sort your list of cocktails in ascending/descending order</li>
+        <li>Filter to only show alcoholic or non-alcoholic cocktails</li>
+        <li>
+          Generate a random cocktail, which is also dependent on your filter
+        </li>
+      </ul>
+      <h4>To start, scroll the list and Select a Cocktail!</h4>
+    </div>
+  </div>
+  <nav class="navbar-color footer">
+    <div>
+      <a
+        class="social-link"
+        href="https://www.facebook.com/brumec.jurcek"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-facebook"
+          viewBox="0 0 16 16"
+        >
+          <path [attr.d]="icon.facebook" />
+        </svg>
+      </a>
+      <a
+        class="social-link"
+        href="https://www.linkedin.com/in/jure-brumec-78308095/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-linkedin"
+          viewBox="0 0 16 16"
+        >
+          <path [attr.d]="icon.linkedIn" />
+        </svg>
+      </a>
+      <a
+        class="social-link"
+        href="https://github.com/GeorgeTheBrick"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-github"
+          viewBox="0 0 16 16"
+        >
+          <path [attr.d]="icon.gitHub" />
+        </svg>
+      </a>
+    </div>
+    <div class="nav-item">
+      <span class="copyright">
+        Copyright &copy;
+        <span>{{ date }}</span>
+        by
+        <a
+          class="footer-link"
+          href="https://jbdesigns.netlify.app/ "
+          target="_blank"
+          rel="noopener noreferrer"
+          >JB Designs</a
+        >
+        . All rights reserved.
+        <div>
+          All data regarding cocktails is property of
+          <a
+            class="footer-link"
+            href="https://www.thecocktaildb.com/api.php"
+            target="_blank"
+            rel="noopener noreferrer"
+            >TheCocktailDB</a
+          >
+        </div>
+      </span>
+    </div>
+  </nav>
+</div>

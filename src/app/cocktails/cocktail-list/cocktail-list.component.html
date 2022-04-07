@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="scroll-window">
+      <div class="lds-dual-ring-wrap">
+        <div
+          class="lds-dual-ring"
+          *ngIf="isLoading$ | async; else content"
+        ></div>
+      </div>
+      <ng-template #content>
+        <app-cocktail-item
+          *ngFor="
+            let cocktailEl of cocktailList$
+              | async
+              | sort: toggleSort
+              | filter: filteredStatus;
+            let i = index
+          "
+          [cocktailItem]="cocktailEl"
+          [index]="i"
+        ></app-cocktail-item>
+      </ng-template>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+.bottom-margin {
+  margin-bottom: 20px;
+}
+
+.scroll-window {
+  overflow-y: scroll;
+  max-height: 82vh;
+
+  padding: 30px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.scroll-window::-webkit-scrollbar {
+  width: 0 !important;
+}
+
+.scroll-window {
+  overflow: -moz-scrollbars-none;
+}
+
+.scroll-window {
+  -ms-overflow-style: none;
+}
+
+.lds-dual-ring-wrap {
+  text-align: center;
+}
+
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: rgba(66, 49, 28, 0.863) transparent rgba(66, 49, 28, 0.863)
+    transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,52 @@
+<div
+  class="bottom-margin shadow-box center-align"
+  *ngIf="cocktail$ | async as cocktail"
+>
+  <div class="row">
+    <div class="col-xs-12">
+      <img
+        src="{{ cocktail.image }}"
+        alt=""
+        style="max-height: 200px"
+        class="img-fluid img-border"
+      />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <h3 class="notranslate">{{ cocktail.name }}</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 fw-bold">
+      {{ cocktail.alcoholic ? "Alcoholic Cocktail" : "Non-Alcoholic Cocktail" }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 fw-bold">ID: {{ cocktail.id }}</div>
+  </div>
+  <hr />
+  <div class="d-flex center-flex">
+    <div class="row d-inline-block center-align-left">
+      <div
+        class="col-xs-8 notranslate"
+        *ngFor="let ingredient of cocktail.ingredients"
+      >
+        {{ ingredient }}
+      </div>
+    </div>
+    <div class="row d-inline-block ms-1 center-align-left">
+      <div
+        class="col-xs-8 notranslate"
+        *ngFor="let measure of cocktail.measure"
+      >
+        {{ measure }}
+      </div>
+    </div>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col-xs-12 notranslate">{{ cocktail.instructions }}</div>
+  </div>
+</div>

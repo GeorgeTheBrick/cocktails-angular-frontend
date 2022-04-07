@@ -1,0 +1,97 @@
+.navbar-collapse {
+  justify-content: center;
+}
+
+.brand-logo {
+  width: 190px;
+}
+
+.navbar {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.nav-end {
+  justify-content: end;
+}
+
+.nav-gap {
+  gap: 10px;
+  align-items: center;
+}
+
+.form-control {
+  box-shadow: none;
+}
+
+.form-control.ng-dirty {
+  color: rgba(66, 49, 28, 0.863);
+}
+.search-form {
+  position: relative;
+}
+
+.btn-outline-success {
+  box-shadow: none;
+  position: relative;
+  background-color: rgba(153, 135, 111, 0.863);
+  color: #fff;
+  border-color: rgba(107, 93, 84, 0.897);
+}
+
+.btn-outline-success:hover,
+.btn-outline-success:active {
+  box-shadow: none;
+  background-color: rgba(255, 245, 238, 0.897);
+  color: rgba(66, 49, 28, 0.863);
+}
+
+.navbar-color {
+  background-color: rgba(66, 49, 28, 0.863);
+  color: rgba(255, 245, 238, 0.897);
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(255, 245, 238, 0.897);
+  transition: all 0.3s;
+}
+
+.nav-link:hover,
+.nav-link:active {
+  opacity: 0.5;
+}
+
+/* .align-flex-default {
+  align-items: center;
+} */
+
+.form-check-input {
+  background-color: rgba(66, 49, 28, 0.863);
+  border-color: rgba(107, 93, 84, 0.897);
+}
+
+@media (max-width: 1074px) {
+  .navbar-expand-lg {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
+
+@media (max-width: 991px) {
+  .nav-gap {
+    gap: 0px;
+    align-items: start;
+  }
+
+  .container-fluid {
+    gap: 10px;
+  }
+
+  .nav-link {
+    padding-top: 3px;
+  }
+
+  .desktop-text-align {
+    text-align: center;
+  }
+}
