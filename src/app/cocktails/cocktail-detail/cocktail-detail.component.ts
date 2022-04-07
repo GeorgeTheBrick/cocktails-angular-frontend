@@ -20,12 +20,10 @@ export class CocktailDetailComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.cocktail$ = this.cocktailService.getCocktail(params['id']);
       setTimeout(() => {
-        innerWidth < 768
-          ? window.scrollTo({
-              top: 0,
-              behavior: 'smooth',
-            })
-          : window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
       }, 1);
     });
   }

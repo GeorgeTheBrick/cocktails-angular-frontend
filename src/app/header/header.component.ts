@@ -37,14 +37,21 @@ export class HeaderComponent implements OnInit {
   }
 
   public onHome() {
-    this.router.navigate(['/cocktails/home'], {
-      relativeTo: this.route,
-      queryParams: { search: '??' },
-    });
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => {
+      this.router.navigate(['/cocktails/home'], {
+        relativeTo: this.route,
+        queryParams: { search: '??' },
+      });
+    }, 1);
   }
 
   public onSubmit() {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: 'smooth',
+    });
+
     if (this.searchForm.valid) {
       this.router.navigate([], {
         relativeTo: this.route,
@@ -53,7 +60,6 @@ export class HeaderComponent implements OnInit {
       this.searchForm.reset();
     }
   }
-
   public onRandom() {
     this.navigateByFragment('random');
   }
