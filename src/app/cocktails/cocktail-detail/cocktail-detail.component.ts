@@ -21,8 +21,11 @@ export class CocktailDetailComponent implements OnInit {
       this.cocktail$ = this.cocktailService.getCocktail(params['id']);
       setTimeout(() => {
         innerWidth < 768
-          ? window.scrollTo(0, document.body.scrollHeight)
-          : window.scrollTo(0, 0);
+          ? window.scrollTo({
+              top: document.body.scrollHeight,
+              behavior: 'smooth',
+            })
+          : window.scrollTo({ top: 0, behavior: 'smooth' });
       }, 1);
     });
   }
