@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { filter, map, Observable, take, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { Cocktail, CocktailService } from '../cocktail.service';
 
 @Component({
@@ -20,11 +20,13 @@ export class CocktailListComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {}
-
   ngOnInit(): void {
     this.cocktailList$ = this.cocktailService.getCocktails();
     this.isLoading$ = this.cocktailService.observeLoading();
-
+    this.searchOnParams();
+    this.sortOnFragment();
+  }
+  private searchOnParams() {
     this.route.queryParams.subscribe((params: Params) => {
       if (params['search']) {
         this.cocktailList$ = this.cocktailService
@@ -38,7 +40,8 @@ export class CocktailListComponent implements OnInit {
           );
       }
     });
-
+  }
+  private sortOnFragment() {
     this.route.fragment.subscribe((fragment: string | null | Params) => {
       if (fragment === 'sort-down') {
         this.toggleSort = true;
@@ -59,7 +62,6 @@ export class CocktailListComponent implements OnInit {
       }
     });
   }
-
   private randomCocktail(): Observable<Cocktail> {
     return (this.cocktailList$ = this.cocktailService.getCocktails().pipe(
       map((cocktails: Cocktail[]) => {
@@ -79,6 +81,7 @@ export class CocktailListComponent implements OnInit {
         const randomIndex: number = Math.trunc(
           Math.random() * cocktails.length
         );
+
         return cocktails.filter(
           (cocktail: Cocktail, i: number) => i === randomIndex
         );
