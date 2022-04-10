@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  imagePlaceholder: './assets/loadSpinner.png',
+  imagePlaceholder: './assets/loadSpinner.gif',
 };
