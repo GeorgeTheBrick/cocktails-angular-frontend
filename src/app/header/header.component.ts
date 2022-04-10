@@ -38,12 +38,11 @@ export class HeaderComponent implements OnInit {
 
   public onHome() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    setTimeout(() => {
-      this.router.navigate(['/cocktails/home'], {
-        relativeTo: this.route,
-        queryParams: { search: '??' },
-      });
-    }, 1);
+
+    this.router.navigate(['/cocktails/home'], {
+      relativeTo: this.route,
+      queryParams: { search: '??' },
+    });
   }
 
   public onSubmit() {

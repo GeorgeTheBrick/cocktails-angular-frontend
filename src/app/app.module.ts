@@ -14,6 +14,7 @@ import { CocktailStartComponent } from './cocktails/cocktail-start/cocktail-star
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SortPipe } from './sort.pipe';
 import { FilterPipe } from './filter.pipe';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { FilterPipe } from './filter.pipe';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    LazyLoadImageModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

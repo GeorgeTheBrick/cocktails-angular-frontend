@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Cocktail } from '../../cocktail.service';
-
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-cocktail-item',
   templateUrl: './cocktail-item.component.html',
@@ -8,9 +8,8 @@ import { Cocktail } from '../../cocktail.service';
 })
 export class CocktailItemComponent implements OnInit {
   @Input() cocktailItem!: Cocktail;
-  public innerWidth = window.innerWidth;
   @Input() index!: number;
-
+  defaultImage: string = environment.imagePlaceholder;
   constructor() {}
 
   ngOnInit(): void {}

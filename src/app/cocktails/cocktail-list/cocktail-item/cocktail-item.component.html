@@ -12,10 +12,11 @@
   </div>
   <span class="float-md-end">
     <img
-      src="{{ cocktailItem.image }}"
+      [defaultImage]="defaultImage"
+      [lazyLoad]="cocktailItem.image"
       alt="{{ cocktailItem.name }}"
       class="img-fluid"
-      style="max-height: 80px"
+      style="max-height: 80px; min-height: 80px"
     />
   </span>
 </a>
