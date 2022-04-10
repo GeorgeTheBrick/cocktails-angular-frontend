@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  imagePlaceholder: '../../../../assets/favicon.png',
+  imagePlaceholder: '../../../../assets/loadSpinner.gif',
 };
 
 /*

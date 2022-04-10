@@ -12,8 +12,10 @@
   </div>
   <span class="float-md-end">
     <img
-      [defaultImage]="defaultImage"
+      [src]="defaultImage"
       [lazyLoad]="cocktailItem.image"
+      [offset]="offsetNumber"
+      [scrollTarget]="scrollWindow"
       alt="{{ cocktailItem.name }}"
       class="img-fluid"
       style="max-height: 80px; min-height: 80px"

@@ -10,6 +10,8 @@ export class CocktailItemComponent implements OnInit {
   @Input() cocktailItem!: Cocktail;
   @Input() index!: number;
   defaultImage: string = environment.imagePlaceholder;
+  offsetNumber: number = 800;
+  scrollWindow = document.getElementById('cocktail-list-window');
   constructor() {}
 
   ngOnInit(): void {}
