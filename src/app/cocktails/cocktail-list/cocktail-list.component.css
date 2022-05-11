@@ -51,3 +51,9 @@
     transform: rotate(360deg);
   }
 }
+
+.page-color {
+  background-color: rgba(153, 135, 111, 0.863);
+  color: #fff;
+  border: none;
+}

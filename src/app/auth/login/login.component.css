@@ -1,0 +1,53 @@
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+.help-block {
+  font-size: 12px;
+  color: red;
+}
+
+.btn-primary {
+  box-shadow: none;
+  position: relative;
+  background-color: rgba(66, 49, 28, 0.863);
+  color: #fff;
+  border-color: rgba(107, 93, 84, 0.897);
+}
+
+.btn-primary:hover,
+.btn-primary:active {
+  box-shadow: none;
+  background-color: rgba(153, 135, 111, 0.863);
+
+  color: #fff;
+}
+
+.btn {
+  border: none;
+  margin: auto;
+}
+
+.container {
+  margin: auto;
+  padding: 70px 0;
+  width: 50%;
+}
+
+.sign-up {
+  background-color: rgba(255, 245, 238, 0.897);
+  color: rgba(66, 49, 28, 0.863);
+  border: 1px solid rgba(153, 135, 111, 0.863);
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+  }
+}
+
+.page-color {
+  background-color: rgba(153, 135, 111, 0.863);
+  color: #fff;
+  border: none;
+}

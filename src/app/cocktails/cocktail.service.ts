@@ -1,20 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import {
-  BehaviorSubject,
-  filter,
-  find,
-  map,
-  Observable,
-  of,
-  Subject,
-  subscribeOn,
-  Subscription,
-  switchMap,
-  take,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject, tap } from 'rxjs';
 import { ApiService } from '../api.service';
 import { CocktailEntity } from '../cocktail-entity.interface';
 
@@ -23,100 +10,86 @@ export interface Cocktail {
   name: string;
   image: string;
   alcoholic: boolean;
-  ingredients?: string[];
-  measure?: string[];
+  ingredients?: { name: string; measure: string }[];
   instructions?: string;
-}
-
-export interface Error {
-  error: { error: string };
-  name: string;
-  status: number | null;
-  statusText: string;
+  _id: string;
+  createdBy?: string;
 }
 
 @Injectable({ providedIn: 'root' })
 export class CocktailService {
-  public cocktails$: BehaviorSubject<Cocktail[]> = new BehaviorSubject<
-    Cocktail[]
-  >([]);
+  public cocktail$: Subject<Cocktail[]> = new Subject();
 
   public isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
+    true
   );
 
-  public errorMessage: Error = {
-    error: { error: '' },
-    name: '',
-    status: null,
-    statusText: '',
-  };
-
-  constructor(private apiService: ApiService, private router: Router) {
-    this.isLoading$.next(true);
-    this.fetchCocktails()
-      .pipe(
-        map((cocktails: CocktailEntity) => {
-          return [...cocktails.alcoholic, ...cocktails.nonAlcoholic];
-        }),
-        tap((cocktails: Cocktail[]) => {
-          this.cocktails$.next(cocktails);
-          this.isLoading$.next(false);
-        })
-      )
-      .subscribe(
-        (response) => {},
-        (error) => {
-          this.router.navigate(['/error']);
-          this.errorMessage = {
-            error: error.error,
-            name: error.name,
-            status: error.status,
-            statusText: error.statusText,
-          };
-        }
-      );
-  }
+  constructor(private apiService: ApiService, private router: Router) {}
 
   public observeLoading(): Observable<boolean> {
     return this.isLoading$.asObservable();
   }
 
   private fetchCocktails(): Observable<CocktailEntity> {
-    return this.apiService.get();
+    return this.apiService.get('cocktails');
   }
 
-  public getCocktails(): Observable<Cocktail[]> {
-    return this.cocktails$.pipe(filter((cocktail) => !!cocktail));
+  public fetchCocktail(id: string): Observable<CocktailEntity> {
+    return this.apiService.get(`cocktails/${id}`);
   }
-  public getCocktail(id: string): Observable<Cocktail | undefined> {
-    return this.cocktails$.pipe(
-      map((cocktails: Cocktail[]) => {
-        return cocktails.find((cocktail: Cocktail) => {
-          return cocktail.id === id;
-        });
-      })
+
+  public fetchSearch(query: string): Observable<CocktailEntity> {
+    return this.apiService.get(`cocktails/${query}`);
+  }
+
+  public fetchRandom(query: string): Observable<CocktailEntity> {
+    return this.apiService.get(`cocktails/${query}`);
+  }
+
+  private fetchMyCocktails(): Observable<CocktailEntity> {
+    return this.apiService.get(`cocktails/myCocktails`);
+  }
+
+  public createCocktail(body: Cocktail): Observable<Cocktail> {
+    return this.apiService.post(`cocktails`, body);
+  }
+
+  public updateCocktail(id: string, body: Cocktail): Observable<Cocktail> {
+    return this.apiService.patch(`cocktails/${id}`, body);
+  }
+
+  public deleteCocktail(id: string): Observable<Cocktail> {
+    return this.apiService.delete(`cocktails/${id}`);
+  }
+  public getMyCocktails(): Observable<Cocktail[]> {
+    return this.fetchMyCocktails().pipe(
+      map((data: CocktailEntity) => data.cocktails)
+    );
+  }
+  public getCocktails(): Observable<Cocktail[]> {
+    return this.fetchCocktails().pipe(
+      map((data: CocktailEntity) => data.cocktails)
+    );
+  }
+
+  public getCocktail(id: string): Observable<Cocktail> {
+    return this.fetchCocktail(id).pipe(
+      map((data: CocktailEntity) => data.cocktail)
     );
   }
 
   public searchCocktails(query: string): Observable<Cocktail[]> {
-    return this.cocktails$.pipe(
-      take(1),
-      map((cocktails: Cocktail[]) =>
-        cocktails.filter((cocktail: Cocktail) => {
-          if (query === '??') {
-            return cocktail;
-          } else {
-            return (
-              cocktail.name.toLowerCase().includes(query.toLowerCase()) ||
-              cocktail.id.includes(query) ||
-              cocktail.ingredients
-                ?.filter((el) => el.toLowerCase().includes(query.toLowerCase()))
-                .join('')
-            );
-          }
-        })
-      )
+    return this.fetchSearch(`?search=${query}`).pipe(
+      map((data: CocktailEntity) => data.cocktails)
+    );
+  }
+
+  public randomCocktail(query: string): Observable<Cocktail[]> {
+    return this.fetchRandom(`random/?alcoholic=${query}`).pipe(
+      map((data: CocktailEntity) => {
+        return [data.cocktail];
+      }),
+      tap((cocktails: Cocktail[]) => this.cocktail$.next(cocktails))
     );
   }
 }

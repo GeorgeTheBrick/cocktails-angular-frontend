@@ -12,15 +12,10 @@
       aria-controls="navbarNav"
       aria-expanded="false"
       aria-label="Toggle navigation"
-      (click)="collapsed = !collapsed"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div
-      class="collapse navbar-collapse nav-end"
-      id="navbarNav"
-      [class.collapse]="collapsed"
-    >
+    <div class="collapse navbar-collapse nav-end" id="navbarNav">
       <ul class="navbar-nav nav-gap">
         <li class="nav-item">
           <div class="form-check">
@@ -89,6 +84,7 @@
             >Home</a
           >
         </li>
+
         <li class="nav-item">
           <form
             #sform="ngForm"
@@ -101,6 +97,7 @@
               [placeholder]="'Search Cocktails'"
               class="form-control me-2"
               name="search"
+              maxlength="20"
               ngModel
               required
             />
@@ -110,6 +107,66 @@
             </button>
           </form>
         </li>
+        <li *ngIf="!(isLoggedIn$ | async)" class="nav-item login-item">
+          <a
+            class="nav-link"
+            aria-current="login"
+            style="cursor: pointer"
+            (click)="onLogin()"
+            >Login</a
+          >
+        </li>
+        <div *ngIf="isLoggedIn$ | async" class="dropdown profile-item">
+          <li class="nav-item">
+            <a
+              *ngIf="user$ | async as user"
+              class="nav-link dropdown-toggle"
+              type="button"
+              id="dropdownMenuLink"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              style="cursor: pointer"
+              ><div class="img-container" *ngIf="user$ | async as user">
+                <img class="profile-img" [src]="user.photo" alt="Avatar" />
+              </div>
+            </a>
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="dropdownMenuLink"
+            >
+              <li *ngIf="user$ | async as user">
+                <a class="dropdown-item user-info"
+                  >{{ user.username }} ({{ user.role }})</a
+                >
+              </li>
+              <hr class="dropdown-hr" />
+              <li>
+                <a
+                  style="cursor: pointer"
+                  class="dropdown-item dropdown-link"
+                  (click)="onClickProfile()"
+                  >My Profile</a
+                >
+              </li>
+              <li>
+                <a
+                  style="cursor: pointer"
+                  class="dropdown-item dropdown-link"
+                  (click)="onClickMyCocktails()"
+                  >My Cocktails</a
+                >
+              </li>
+              <li>
+                <a
+                  style="cursor: pointer"
+                  class="dropdown-item dropdown-link"
+                  (click)="onLogout()"
+                  >Logout</a
+                >
+              </li>
+            </ul>
+          </li>
+        </div>
       </ul>
     </div>
   </div>

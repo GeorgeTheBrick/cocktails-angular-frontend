@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable, tap, catchError, EMPTY } from 'rxjs';
 import { Cocktail, CocktailService } from '../cocktail.service';
 
 @Component({
@@ -14,6 +14,7 @@ export class CocktailListComponent implements OnInit {
   public isLoading$!: Observable<boolean>;
   public toggleSort: boolean = true;
   public filteredStatus: boolean | undefined;
+  public errorObject: null | string = null;
 
   constructor(
     private cocktailService: CocktailService,
@@ -21,21 +22,33 @@ export class CocktailListComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit(): void {
-    this.cocktailList$ = this.cocktailService.getCocktails();
+    this.cocktailList$ = this.cocktailService.getCocktails().pipe(
+      catchError((err) => {
+        this.errorObject = err.statusText + ` (${err.status})`;
+        return EMPTY;
+      }),
+      tap((cocktails: Cocktail[]) => {
+        this.errorObject = null;
+      })
+    );
     this.isLoading$ = this.cocktailService.observeLoading();
+
     this.searchOnParams();
     this.sortOnFragment();
   }
+
   private searchOnParams() {
     this.route.queryParams.subscribe((params: Params) => {
       if (params['search']) {
         this.cocktailList$ = this.cocktailService
           .searchCocktails(params['search'])
           .pipe(
+            catchError((err) => {
+              this.errorObject = `Cocktail ${err.statusText}`;
+              return EMPTY;
+            }),
             tap((cocktails: Cocktail[]) => {
-              if (cocktails.length === 0) {
-                return alert('Cocktail does not exist!');
-              }
+              this.errorObject = null;
             })
           );
       }
@@ -43,6 +56,16 @@ export class CocktailListComponent implements OnInit {
   }
   private sortOnFragment() {
     this.route.fragment.subscribe((fragment: string | null | Params) => {
+      if (fragment === 'home') {
+        this.errorObject = null;
+        this.cocktailList$ = this.cocktailService.getCocktails().pipe(
+          catchError((err) => {
+            this.errorObject = err.statusText + ` (${err.status})`;
+            return EMPTY;
+          })
+        );
+      }
+
       if (fragment === 'sort-down') {
         this.toggleSort = true;
       } else if (fragment === 'sort-up') {
@@ -58,39 +81,41 @@ export class CocktailListComponent implements OnInit {
       }
 
       if (fragment === 'random') {
-        this.randomCocktail();
+        this.errorObject = null;
+        if (this.filteredStatus === false) {
+          this.cocktailList$ = this.cocktailService.randomCocktail(
+            this.filteredStatus.toString()
+          );
+          this.navigateToRandomCocktail();
+        } else if (this.filteredStatus === true) {
+          this.cocktailList$ = this.cocktailService.randomCocktail(
+            this.filteredStatus.toString()
+          );
+          this.navigateToRandomCocktail();
+        } else {
+          this.cocktailList$ = this.cocktailService.randomCocktail('showAll');
+          this.navigateToRandomCocktail();
+        }
+      }
+
+      if (fragment === 'myCocktails') {
+        this.cocktailList$ = this.cocktailService.getMyCocktails().pipe(
+          catchError((err) => {
+            this.errorObject = err.error.message;
+            return EMPTY;
+          })
+        );
       }
     });
   }
-  private randomCocktail(): Observable<Cocktail> {
-    return (this.cocktailList$ = this.cocktailService.getCocktails().pipe(
-      map((cocktails: Cocktail[]) => {
-        if (this.filteredStatus === false) {
-          return cocktails.filter(
-            (cocktail: Cocktail) => cocktail.alcoholic === false
-          );
-        } else if (this.filteredStatus === true) {
-          return cocktails.filter(
-            (cocktail: Cocktail) => cocktail.alcoholic === true
-          );
-        } else {
-          return cocktails;
-        }
-      }),
-      map((cocktails: Cocktail[]) => {
-        const randomIndex: number = Math.trunc(
-          Math.random() * cocktails.length
-        );
 
-        return cocktails.filter(
-          (cocktail: Cocktail, i: number) => i === randomIndex
-        );
-      }),
-      tap((cocktails: Cocktail[] | any) =>
-        cocktails.map((cocktail: Cocktail) =>
-          this.router.navigate([`/cocktails/${cocktail.id}`])
+  private navigateToRandomCocktail() {
+    this.cocktailService.cocktail$
+      .pipe(
+        map((cocktail) =>
+          this.router.navigate([`/cocktails/${cocktail[0]._id}`])
         )
       )
-    ));
+      .subscribe();
   }
 }

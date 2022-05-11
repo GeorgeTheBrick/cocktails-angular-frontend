@@ -1,0 +1,63 @@
+<div class="bottom-margin shadow-box center-align">
+  <div class="user-links-container">
+    <h4 class="profile-heading" *ngIf="user$ | async as user">
+      {{ user.username }}'s Profile
+    </h4>
+    <hr class="profile-nav-line" />
+    <ul class="nav-list">
+      <li class="nav-item">
+        <a (click)="onMyCocktails()" style="cursor: pointer" class="nav-link"
+          >My Cocktails</a
+        >
+      </li>
+      <li class="nav-item">
+        <a style="cursor: pointer" class="nav-link" (click)="onUpload()"
+          >Upload Image</a
+        >
+      </li>
+      <li class="nav-item">
+        <a (click)="onLogout()" style="cursor: pointer" class="nav-link"
+          >Logout</a
+        >
+      </li>
+    </ul>
+  </div>
+  <div class="user-profile-container">
+    <div class="img-container" *ngIf="user$ | async as user">
+      <img class="profile-img" [src]="user.photo" alt="Avatar" />
+      <h4 class="user-name">{{ user.username }}</h4>
+      <h4 class="user-role">({{ user.role }})</h4>
+      <form
+        *ngIf="openUploadForm$ | async"
+        #uploadForm="ngForm"
+        (ngSubmit)="onSubmit(uploadForm)"
+      >
+        <div class="mb-3">
+          <label for="photo" class="form-label"
+            >Enter the url of your image</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="photo"
+            aria-describedby="photo"
+            required
+            name="photo"
+            ngModel
+            #photo="ngModel"
+          />
+        </div>
+        <div class="btn-container">
+          <button type="submit" class="btn btn-primary">Upload</button>
+          <button
+            type="button"
+            class="btn btn-primary sign-up"
+            (click)="onCancel()"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

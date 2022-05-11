@@ -7,6 +7,9 @@ import { Cocktail } from './cocktails/cocktail.service';
 })
 export class SortPipe implements PipeTransform {
   transform(value: Cocktail[] | null, ascending: boolean): Cocktail[] | null {
+    if (!value) {
+      return null;
+    }
     if (ascending === true) {
       return value!.sort((a: Cocktail, b: Cocktail) =>
         a.name.localeCompare(b.name)

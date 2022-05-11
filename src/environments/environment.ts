@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   imagePlaceholder: '../../../../assets/loadSpinner.gif',
+  requestUrl: 'http://127.0.0.1:2000',
 };
 
 /*

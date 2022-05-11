@@ -104,3 +104,25 @@
   flex-direction: column;
   justify-content: center;
 }
+
+.btn-primary {
+  box-shadow: none;
+  position: relative;
+  background-color: rgba(66, 49, 28, 0.863);
+  color: #fff;
+  border-color: rgba(107, 93, 84, 0.897);
+}
+
+.btn-primary:hover,
+.btn-primary:active {
+  box-shadow: none;
+  background-color: rgba(153, 135, 111, 0.863);
+
+  color: #fff;
+}
+
+.btn {
+  border: none;
+  margin: auto;
+  margin-top: 10px;
+}

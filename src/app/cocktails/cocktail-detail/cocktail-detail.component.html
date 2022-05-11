@@ -1,6 +1,14 @@
+<ng-template #error>
+  <div *ngIf="errorObject" class="col-12 text-center">
+    <div class="alert alert-danger page-color">
+      {{ errorObject }}
+    </div>
+  </div>
+</ng-template>
+
 <div
   class="bottom-margin shadow-box center-align"
-  *ngIf="cocktail$ | async as cocktail"
+  *ngIf="cocktail$ | async as cocktail; else error"
 >
   <div class="row">
     <div class="col-xs-12">
@@ -23,30 +31,50 @@
       {{ cocktail.alcoholic ? "Alcoholic Cocktail" : "Non-Alcoholic Cocktail" }}
     </div>
   </div>
-  <div class="row">
-    <div class="col-xs-12 fw-bold">ID: {{ cocktail.id }}</div>
-  </div>
-  <hr />
+
+  <hr *ngIf="cocktail.ingredients?.length" />
   <div class="d-flex center-flex">
     <div class="row d-inline-block center-align-left">
       <div
         class="col-xs-8 notranslate"
         *ngFor="let ingredient of cocktail.ingredients"
       >
-        {{ ingredient }}
+        {{ ingredient.name }}
       </div>
     </div>
     <div class="row d-inline-block ms-1 center-align-left">
       <div
         class="col-xs-8 notranslate"
-        *ngFor="let measure of cocktail.measure"
+        *ngFor="let ingredient of cocktail.ingredients"
       >
-        {{ measure }}
+        {{ ingredient.measure }}
       </div>
     </div>
   </div>
   <hr />
   <div class="row">
     <div class="col-xs-12 notranslate">{{ cocktail.instructions }}</div>
+  </div>
+  <div class="btn-container" *ngIf="isLoggedIn$ | async">
+    <button
+      *ngIf="isAllowedEdit$ | async"
+      type="submit"
+      class="btn btn-primary"
+      (click)="onEditCocktail()"
+    >
+      Edit
+    </button>
+    <button
+      *ngIf="isAllowedEdit$ | async"
+      type="submit"
+      class="btn btn-primary"
+      (click)="onDeleteCocktail()"
+    >
+      Delete
+    </button>
+
+    <button type="submit" class="btn btn-primary" (click)="onNewCocktail()">
+      New
+    </button>
   </div>
 </div>

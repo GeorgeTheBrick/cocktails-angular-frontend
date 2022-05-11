@@ -9,12 +9,16 @@ import { CocktailItemComponent } from './cocktails/cocktail-list/cocktail-item/c
 import { CocktailDetailComponent } from './cocktails/cocktail-detail/cocktail-detail.component';
 import { HeaderComponent } from './header/header.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ErrorPageComponent } from './error-page/error-page/error-page.component';
-import { CocktailStartComponent } from './cocktails/cocktail-start/cocktail-start/cocktail-start.component';
+import { CocktailStartComponent } from './cocktails/cocktail-start/cocktail-start.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SortPipe } from './sort.pipe';
 import { FilterPipe } from './filter.pipe';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { AuthComponent } from './auth/auth.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { CocktailEditComponent } from './cocktails/cocktail-edit/cocktail-edit.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -24,10 +28,14 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
     CocktailItemComponent,
     CocktailDetailComponent,
     HeaderComponent,
-    ErrorPageComponent,
     CocktailStartComponent,
     SortPipe,
     FilterPipe,
+    AuthComponent,
+    LoginComponent,
+    SignupComponent,
+    CocktailEditComponent,
+    UserComponent,
   ],
   imports: [
     BrowserModule,

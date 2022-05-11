@@ -33,7 +33,7 @@
 
 @media (max-width: 1200px) {
   .list-group-item-heading {
-    max-width: 200px;
+    max-width: 190px;
   }
 }
 
@@ -49,6 +49,7 @@
 
   .float-md-end {
     float: none !important ;
+    display: block;
     text-align: center;
   }
 

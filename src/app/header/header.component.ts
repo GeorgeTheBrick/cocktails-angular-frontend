@@ -1,13 +1,8 @@
-import {
-  Component,
-  ContentChildren,
-  OnInit,
-  QueryList,
-  ViewChild,
-  ViewChildren,
-} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { AuthService, User } from '../auth/authService';
 import { Icon } from '../shared/icon-definition';
 
 @Component({
@@ -17,17 +12,36 @@ import { Icon } from '../shared/icon-definition';
 })
 export class HeaderComponent implements OnInit {
   @ViewChild('sform') searchForm!: NgForm;
-  public collapsed: boolean = true;
   public sort: boolean = false;
   public icon = new Icon();
   public alcoholic: boolean = true;
   public nonAlcoholic: boolean = true;
   public disabledAlcoholic: boolean = false;
   public disabledNonAlcoholic: boolean = false;
+  public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+  user$!: Observable<User>;
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private authService: AuthService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.observeLogin();
+    this.user$ = this.authService.user$;
+  }
+
+  private observeLogin() {
+    this.isLoggedIn$ = this.authService.isLoggedIn$;
+  }
+
+  public onClickProfile() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.router.navigate(['/cocktails/me']);
+  }
 
   private navigateByFragment(fragment: string) {
     this.router.navigate([], {
@@ -36,12 +50,33 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  public getheight = function () {
+    const sh = document.body.scrollHeight;
+    return sh && sh > 0 ? sh : document.documentElement.scrollHeight;
+  };
+
+  public onClickMyCocktails() {
+    this.navigateByFragment('myCocktails');
+
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: 'smooth',
+    });
+  }
+  public onLogin() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.router.navigate(['/cocktails/login']);
+  }
+  public onLogout() {
+    this.authService.logout().subscribe();
+  }
+
   public onHome() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     this.router.navigate(['/cocktails/home'], {
       relativeTo: this.route,
-      queryParams: { search: '??' },
+      fragment: 'home',
     });
   }
 

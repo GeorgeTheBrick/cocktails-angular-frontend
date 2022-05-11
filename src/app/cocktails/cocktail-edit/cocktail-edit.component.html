@@ -1,0 +1,162 @@
+<div *ngIf="errorObject; else content" class="col-12 text-center">
+  <div class="alert alert-danger page-color">
+    {{ errorObject }}
+  </div>
+</div>
+
+<ng-template #content>
+  <div class="row shadow-box">
+    <div class="col-xs-12">
+      <h4 class="creator-heading">
+        {{ editMode ? "Cocktail Editor" : "Cocktail Creator" }}
+      </h4>
+      <form
+        *ngIf="cocktailForm"
+        [formGroup]="cocktailForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group img-path-margin">
+              <input
+                type="text"
+                id="imagePath"
+                placeholder="Image URL: (https://myimage.com/image.png)"
+                formControlName="imagePath"
+                class="form-control"
+                #imagePath
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <img
+              [src]="imagePath.value"
+              style="max-height: 200px"
+              class="img-fluid img-border"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <input
+                placeholder="Name"
+                type="text"
+                id="name"
+                maxlength="40"
+                formControlName="name"
+                class="form-control"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row isalc-margin">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <label for="isAlcoholic"></label>
+              <select
+                class="form-select"
+                aria-label="is alcoholic"
+                id="isAlcoholic"
+                formControlName="isAlcoholic"
+              >
+                <option [disabled]="true" [selected]="true">
+                  Specify if cocktail is alcoholic
+                </option>
+                <option value="1">Alcoholic</option>
+                <option value="2">Non-Alcoholic</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12" formArrayName="ingredients">
+            <div
+              class="row ing-row"
+              *ngFor="let ingredientCtrl of getControls(); let i = index"
+              [formGroupName]="i"
+              style="margin-top: 10px"
+            >
+              <div class="col-xs-8">
+                <input
+                  placeholder="Ingredient name"
+                  type="text"
+                  class="form-control"
+                  formControlName="name"
+                  maxlength="30"
+                />
+              </div>
+              <div class="col-xs-2">
+                <input
+                  placeholder="5 ml/g/dashes"
+                  type="text"
+                  class="form-control"
+                  formControlName="measure"
+                  maxlength="15"
+                />
+              </div>
+              <div class="col-xs-1">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="onDeleteIngredient(i)"
+                >
+                  X
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12">
+                <button
+                  type="button"
+                  class="btn btn-primary btn-ingredient"
+                  (click)="odAddIngredient()"
+                >
+                  Add ingredient
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <textarea
+                placeholder="Instructions (255 characters max.)"
+                type="text"
+                id="instructions"
+                formControlName="instructions"
+                maxlength="255"
+                class="form-control"
+                rows="2"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="btn-manage-edit">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="!cocktailForm.valid"
+              >
+                Save
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary btn-cancel"
+                (click)="onCancel()"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>

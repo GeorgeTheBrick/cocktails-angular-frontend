@@ -1,0 +1,65 @@
+<div *ngIf="errorObject" class="col-12 text-center">
+  <div class="alert alert-danger page-color">
+    {{ errorObject }}
+  </div>
+</div>
+
+<form #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)">
+  <div class="container">
+    <div class="mb-3">
+      <label for="username" class="form-label">Username</label>
+      <input
+        type="text"
+        class="form-control"
+        id="username"
+        aria-describedby="enter-username"
+        required
+        minlength="3"
+        maxlength="15"
+        name="username"
+        ngModel
+        #username="ngModel"
+      />
+      <span class="help-block" *ngIf="!username.valid && username.touched"
+        >Please enter a valid username! (3 - 15 characters)</span
+      >
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        required
+        minlength="8"
+        name="password"
+        ngModel
+        #password="ngModel"
+      />
+      <span class="help-block" *ngIf="!password.valid && password.touched"
+        >Please enter a valid password! (Minimum 8 characters)</span
+      >
+    </div>
+    <div class="mb-3">
+      <label for="passwordConfirm" class="form-label">Confirm Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="passwordConfirm"
+        name="passwordConfirm"
+        minlength="8"
+        required
+        ngModel
+        #passwordConfirm="ngModel"
+      />
+
+      <span
+        class="help-block"
+        *ngIf="(!passwordConfirm.valid && passwordConfirm.touched) || !isValid"
+        >Please enter a valid confirmation password!
+      </span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Sign up</button>
+  </div>
+</form>

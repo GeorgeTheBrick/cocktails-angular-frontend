@@ -1,14 +1,16 @@
 <a
   style="cursor: pointer"
   class="list-group-item clearfix cocktail-item"
-  [routerLink]="[cocktailItem.id]"
+  [routerLink]="[cocktailItem._id]"
   routerLinkActive="active"
 >
   <div class="float-md-start">
     <h4 class="list-group-item-heading desktop-text-align notranslate">
       {{ cocktailItem.name }}
     </h4>
-    <p class="list-group-item-text float-md-start">ID: {{ cocktailItem.id }}</p>
+    <p class="list-group-item-text float-md-start">
+      {{ cocktailItem.alcoholic ? "Alcoholic" : "Non-Alcoholic" }}
+    </p>
   </div>
   <span class="float-md-end">
     <img

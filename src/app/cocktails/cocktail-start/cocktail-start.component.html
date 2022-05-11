@@ -1,6 +1,6 @@
 <div class="bottom-margin shadow-box center-align">
   <h3>Welcome to our Cocktail Application!</h3>
-  <p>A simple app, where you can find all your favourite cocktails</p>
+  <p>A simple app, where you can find or add all of your favourite cocktails</p>
   <hr />
   <div class="content-wrap">
     <div class="content">
@@ -13,7 +13,23 @@
           Generate a random cocktail, which is also dependent on your filter
         </li>
       </ul>
-      <h4>To start, scroll the list and Select a Cocktail!</h4>
+      <h4>Log in to create/edit your own cocktails!</h4>
+      <button
+        *ngIf="!(isLoggedIn$ | async)"
+        type="submit"
+        class="btn btn-primary"
+        (click)="onLogin()"
+      >
+        Login
+      </button>
+      <button
+        *ngIf="isLoggedIn$ | async"
+        type="submit"
+        class="btn btn-primary"
+        (click)="onAddCocktail()"
+      >
+        Add a new Cocktail!
+      </button>
     </div>
   </div>
   <nav class="navbar-color footer">
@@ -84,7 +100,7 @@
         >
         . All rights reserved.
         <div>
-          All data regarding cocktails is property of
+          Most of the data regarding cocktails is property of
           <a
             class="footer-link"
             href="https://www.thecocktaildb.com/api.php"
