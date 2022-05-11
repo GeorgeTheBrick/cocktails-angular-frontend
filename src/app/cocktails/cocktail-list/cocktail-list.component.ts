@@ -41,7 +41,7 @@ export class CocktailListComponent implements OnInit {
     this.route.queryParams.subscribe((params: Params) => {
       if (params['search']) {
         this.cocktailList$ = this.cocktailService
-          .searchCocktails(params['search'])
+          .searchCocktails(params['search'].toLowerCase())
           .pipe(
             catchError((err) => {
               this.errorObject = `Cocktail ${err.statusText}`;
