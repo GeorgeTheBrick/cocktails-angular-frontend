@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { BehaviorSubject, catchError, EMPTY, Observable, tap } from 'rxjs';
+import { BehaviorSubject, catchError, EMPTY, map, Observable, tap } from 'rxjs';
 import { Cocktail, CocktailService } from '../cocktail.service';
 
 @Component({
@@ -10,7 +10,6 @@ import { Cocktail, CocktailService } from '../cocktail.service';
   styleUrls: ['./cocktail-edit.component.css'],
 })
 export class CocktailEditComponent implements OnInit {
-  public cocktail$!: Observable<Cocktail>;
   public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
@@ -18,6 +17,7 @@ export class CocktailEditComponent implements OnInit {
   editMode = false;
   cocktailForm!: FormGroup;
   id!: string;
+  cocktail$!: Observable<Cocktail>;
 
   constructor(
     private cocktailService: CocktailService,
@@ -30,6 +30,7 @@ export class CocktailEditComponent implements OnInit {
       this.id = params['id'];
       this.editMode = params['id'] != null;
     });
+
     this.initForm();
   }
 
@@ -121,39 +122,42 @@ export class CocktailEditComponent implements OnInit {
     );
 
     if (this.editMode) {
-      this.cocktail$ = this.cocktailService.getCocktail(this.id);
+      this.cocktailService
+        .getCocktail(this.id)
+        .pipe(
+          map((cocktail: Cocktail) => {
+            cocktailName = cocktail.name;
+            cocktailImagePath = cocktail.image;
+            cocktailInstructions = cocktail.instructions;
+            cocktailIsAlcoholic = cocktail.alcoholic ? '1' : '2';
 
-      this.cocktail$.subscribe((cocktail: any) => {
-        cocktailName = cocktail.name;
-        cocktailImagePath = cocktail.image;
-        cocktailInstructions = cocktail.instructions;
-        cocktailIsAlcoholic = cocktail.alcoholic ? '1' : '2';
-
-        if (cocktail['ingredients']) {
-          for (let ingredient of cocktail.ingredients) {
-            cocktailIngredients.push(
-              new FormGroup({
-                name: new FormControl(ingredient.name, Validators.required),
-                measure: new FormControl(ingredient.measure),
-              })
+            if (cocktail['ingredients']) {
+              for (let ingredient of cocktail.ingredients) {
+                cocktailIngredients.push(
+                  new FormGroup({
+                    name: new FormControl(ingredient.name, Validators.required),
+                    measure: new FormControl(ingredient.measure),
+                  })
+                );
+              }
+            }
+            this.generateForm(
+              cocktailName,
+              cocktailImagePath,
+              cocktailIngredients,
+              cocktailInstructions,
+              cocktailIsAlcoholic
             );
-          }
-        }
-        this.generateForm(
-          cocktailName,
-          cocktailImagePath,
-          cocktailIngredients,
-          cocktailInstructions,
-          cocktailIsAlcoholic
-        );
-      });
+          })
+        )
+        .subscribe();
     }
   }
 
   private generateForm(
     cocktailName: string,
     cocktailImagePath: string,
-    cocktailIngredients: any,
+    cocktailIngredients: FormArray,
     cocktailInstructions: string | undefined,
     cocktailIsAlcoholic: string
   ) {

@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Observable, catchError, tap, BehaviorSubject, EMPTY } from 'rxjs';
+import {
+  Observable,
+  catchError,
+  tap,
+  BehaviorSubject,
+  EMPTY,
+  Subject,
+} from 'rxjs';
 import { AuthService, User } from 'src/app/auth/authService';
 import { CocktailService, Cocktail } from '../cocktail.service';
 
@@ -11,6 +18,7 @@ import { CocktailService, Cocktail } from '../cocktail.service';
 })
 export class CocktailDetailComponent implements OnInit {
   public cocktail$!: Observable<Cocktail>;
+  public cocktailItem$: Subject<Cocktail> = new Subject<Cocktail>();
   public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
@@ -37,7 +45,8 @@ export class CocktailDetailComponent implements OnInit {
           this.errorObject = `No cocktail with that ID`;
           return EMPTY;
         }),
-        tap((cocktails: Cocktail) => {
+        tap((cocktail: Cocktail) => {
+          this.cocktailItem$.next(cocktail);
           this.errorObject = null;
         })
       );
@@ -58,8 +67,11 @@ export class CocktailDetailComponent implements OnInit {
 
   private isAllowedEdit() {
     this.user$ = this.authService.user$;
-
-    this.authService.isAllowed(this.user$, this.cocktail$, this.isAllowedEdit$);
+    this.authService.isAllowed(
+      this.user$,
+      this.cocktailItem$,
+      this.isAllowedEdit$
+    );
   }
 
   onEditCocktail() {

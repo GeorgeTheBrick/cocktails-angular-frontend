@@ -126,13 +126,13 @@ export class AuthService implements OnInit {
 
   public isAllowed(
     getUser: Observable<User>,
-    getCocktails: Observable<Cocktail>,
+    getCocktail: Observable<Cocktail>,
     isAllowed: BehaviorSubject<boolean>
   ) {
     getUser
       .pipe(
         switchMap((user: User) =>
-          getCocktails.pipe(
+          getCocktail.pipe(
             map((cocktail: Cocktail) => {
               if (!user) {
                 return;

@@ -27,7 +27,7 @@ export class CocktailListComponent implements OnInit {
         this.errorObject = err.statusText + ` (${err.status})`;
         return EMPTY;
       }),
-      tap((cocktails: Cocktail[]) => {
+      tap(() => {
         this.errorObject = null;
       })
     );
@@ -47,7 +47,7 @@ export class CocktailListComponent implements OnInit {
               this.errorObject = `Cocktail ${err.statusText}`;
               return EMPTY;
             }),
-            tap((cocktails: Cocktail[]) => {
+            tap(() => {
               this.errorObject = null;
             })
           );
