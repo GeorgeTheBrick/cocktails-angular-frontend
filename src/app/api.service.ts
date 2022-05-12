@@ -6,8 +6,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({ providedIn: 'root' })
 export class ApiService implements OnInit {
   private URL: string = environment.requestUrl;
-  private userId: string = '';
-  private userRole: string = '';
+  private headers!: { token: string; id: string; role: string };
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {}
@@ -16,19 +15,24 @@ export class ApiService implements OnInit {
     const userData: {
       id: string;
       role: string;
+      token: string;
     } = JSON.parse(localStorage.getItem('userData')!);
     if (!userData) {
       return;
     }
-    this.userId = userData.id;
-    this.userRole = userData.role;
+
+    this.headers = {
+      token: userData.token,
+      id: userData.id,
+      role: userData.role,
+    };
   }
 
   public get<T>(params: string = ''): Observable<T> {
     this.getIdFromStorage();
     return this.http.get<T>(`${this.URL}/api/v1/${params}`, {
       withCredentials: true,
-      headers: { id: `${this.userId}`, role: `${this.userRole}` },
+      headers: this.headers,
     });
   }
 
@@ -36,7 +40,7 @@ export class ApiService implements OnInit {
     this.getIdFromStorage();
     return this.http.post<T>(`${this.URL}/api/v1/${params}`, body, {
       withCredentials: true,
-      headers: { id: `${this.userId}`, role: `${this.userRole}` },
+      headers: this.headers,
     });
   }
 
@@ -44,7 +48,7 @@ export class ApiService implements OnInit {
     this.getIdFromStorage();
     return this.http.patch<T>(`${this.URL}/api/v1/${params}`, body, {
       withCredentials: true,
-      headers: { id: `${this.userId}`, role: `${this.userRole}` },
+      headers: this.headers,
     });
   }
 
@@ -52,7 +56,7 @@ export class ApiService implements OnInit {
     this.getIdFromStorage();
     return this.http.delete<T>(`${this.URL}/api/v1/${params}`, {
       withCredentials: true,
-      headers: { id: `${this.userId}`, role: `${this.userRole}` },
+      headers: this.headers,
     });
   }
 }

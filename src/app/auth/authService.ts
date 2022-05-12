@@ -8,6 +8,7 @@ export interface AuthResponseData {
   status: string;
   user: { photo: string; username: string; _id: string; role: string };
   expiresIn: number;
+  token: string;
 }
 
 export interface User {
@@ -16,6 +17,7 @@ export interface User {
   expiresIn: number;
   role: string;
   photo: string;
+  token: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -66,6 +68,7 @@ export class AuthService implements OnInit {
       expiresIn: resData.expiresIn,
       role: resData.user.role,
       photo: resData.user.photo,
+      token: resData.token,
     };
     this.user$.next(currentUser);
     localStorage.setItem('userData', JSON.stringify(currentUser));
@@ -98,6 +101,7 @@ export class AuthService implements OnInit {
       expiresIn: number;
       role: string;
       photo: string;
+      token: string;
     } = JSON.parse(localStorage.getItem('userData')!);
     if (!userData) {
       return;

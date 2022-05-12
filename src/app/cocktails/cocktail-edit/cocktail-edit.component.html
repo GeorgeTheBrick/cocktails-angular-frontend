@@ -32,11 +32,11 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-xs-12 margin-bottom">
             <img
+              *ngIf="imagePath.value"
               [src]="imagePath.value"
-              style="max-height: 200px"
-              class="img-fluid img-border"
+              class="img-fluid img-border cocktail-img"
             />
           </div>
         </div>
