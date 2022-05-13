@@ -6,7 +6,7 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { BehaviorSubject, map, Observable, Subject, switchMap } from 'rxjs';
+import { BehaviorSubject, map, Observable, switchMap } from 'rxjs';
 import { Cocktail, CocktailService } from '../cocktails/cocktail.service';
 import { AuthService, User } from './authService';
 

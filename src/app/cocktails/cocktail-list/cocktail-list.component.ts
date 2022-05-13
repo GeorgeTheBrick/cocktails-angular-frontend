@@ -110,9 +110,9 @@ export class CocktailListComponent implements OnInit {
   }
 
   private navigateToRandomCocktail() {
-    this.cocktailService.cocktail$
+    this.cocktailService.cocktails$
       .pipe(
-        map((cocktail) =>
+        map((cocktail: Cocktail[]) =>
           this.router.navigate([`/cocktails/${cocktail[0]._id}`])
         )
       )

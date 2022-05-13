@@ -8,7 +8,7 @@ import {
   EMPTY,
   Subject,
 } from 'rxjs';
-import { AuthService, User } from 'src/app/auth/authService';
+import { AuthService } from 'src/app/auth/authService';
 import { CocktailService, Cocktail } from '../cocktail.service';
 
 @Component({

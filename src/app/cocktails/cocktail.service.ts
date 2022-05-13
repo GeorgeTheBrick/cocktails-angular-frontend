@@ -18,8 +18,7 @@ export interface Cocktail {
 
 @Injectable({ providedIn: 'root' })
 export class CocktailService {
-  public cocktail$: Subject<Cocktail[]> = new Subject();
-
+  public cocktails$: Subject<Cocktail[]> = new Subject();
   public isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     true
   );
@@ -89,7 +88,7 @@ export class CocktailService {
       map((data: CocktailEntity) => {
         return [data.cocktail];
       }),
-      tap((cocktails: Cocktail[]) => this.cocktail$.next(cocktails))
+      tap((cocktails: Cocktail[]) => this.cocktails$.next(cocktails))
     );
   }
 }
