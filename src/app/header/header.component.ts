@@ -50,11 +50,6 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  public getheight = function () {
-    const sh = document.body.scrollHeight;
-    return sh && sh > 0 ? sh : document.documentElement.scrollHeight;
-  };
-
   public onClickMyCocktails() {
     this.navigateByFragment('myCocktails');
 

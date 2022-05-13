@@ -1,1 +1,50 @@
+.col-md-7 {
+  position: relative;
+}
 
+.col-md-5 {
+  position: relative;
+}
+
+.btn-link {
+  display: none;
+  box-shadow: none;
+  position: relative;
+  background-color: rgba(66, 49, 28, 0.863);
+  color: #fff;
+  border-color: rgba(107, 93, 84, 0.897);
+  justify-content: center;
+  align-items: center;
+
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+.btn-link:hover,
+.btn-link:active {
+  box-shadow: none;
+  background-color: rgba(153, 135, 111, 0.863);
+
+  color: #fff;
+}
+
+.btn-down {
+  position: absolute;
+  left: 87%;
+  bottom: 50%;
+  z-index: 999;
+}
+
+.btn-up {
+  position: absolute;
+  left: 87%;
+  bottom: 50%;
+  z-index: 999;
+}
+
+@media (max-width: 767px) {
+  .btn-link {
+    display: flex;
+  }
+}
