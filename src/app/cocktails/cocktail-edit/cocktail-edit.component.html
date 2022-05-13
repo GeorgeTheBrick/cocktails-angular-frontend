@@ -64,7 +64,7 @@
                 id="isAlcoholic"
                 formControlName="isAlcoholic"
               >
-                <option [disabled]="true" [selected]="true">
+                <option *ngIf="!editMode" [disabled]="true" [selected]="true">
                   Specify if cocktail is alcoholic
                 </option>
                 <option value="1">Alcoholic</option>
