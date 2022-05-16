@@ -43,10 +43,10 @@
     </div>
     <div class="row d-inline-block ms-1 center-align-left">
       <div
-        class="col-xs-8 notranslate"
+        class="col-xs-8 notranslate cocktail-measure"
         *ngFor="let ingredient of cocktail.ingredients"
       >
-        {{ ingredient.measure }}
+        {{ ingredient.measure || "&nbsp;" }}
       </div>
     </div>
   </div>
