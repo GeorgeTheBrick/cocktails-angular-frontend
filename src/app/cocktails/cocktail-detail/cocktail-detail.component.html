@@ -6,6 +6,12 @@
   </div>
 </ng-template>
 
+<cocktail-detail-modal
+  [botResponse$]="botResponse$"
+  [isBotLoading$]="isBotLoading$"
+  [errorObject]="errorObject"
+></cocktail-detail-modal>
+
 <div
   class="bottom-margin shadow-box center-align"
   *ngIf="cocktail$ | async as cocktail; else error"
@@ -75,5 +81,16 @@
     <button type="submit" class="btn btn-primary" (click)="onNewCocktail()">
       New
     </button>
+  </div>
+  <div class="btn-container">
+  <button
+    (click)="onBotButtonClick()"
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#botModal"
+  >
+    Tell me more
+  </button>
   </div>
 </div>

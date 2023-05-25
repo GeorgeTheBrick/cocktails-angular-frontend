@@ -19,6 +19,9 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { CocktailEditComponent } from './cocktails/cocktail-edit/cocktail-edit.component';
 import { UserComponent } from './user/user.component';
+import {
+  CocktailDetailModalComponent
+} from "./cocktails/cocktail-detail/cocktail-detail-modal/cocktail-detail-modal.component";
 
 @NgModule({
   declarations: [
@@ -36,6 +39,7 @@ import { UserComponent } from './user/user.component';
     SignupComponent,
     CocktailEditComponent,
     UserComponent,
+    CocktailDetailModalComponent,
   ],
   imports: [
     BrowserModule,

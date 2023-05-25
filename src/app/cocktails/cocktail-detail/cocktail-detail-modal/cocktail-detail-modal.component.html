@@ -1,0 +1,18 @@
+<div class="modal fader" id="botModal" tabindex="-1" aria-labelledby="botModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content page-color">
+      <div class="modal-header title-color">
+        <h5 class="modal-title" id="botModalLabel">Cocktail Bot</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div *ngIf="!errorObject && (isBotLoading$ | async)" class="lds-dual-ring-wrap mt-4">
+        <div class="lds-dual-ring"></div>
+      </div>
+      <div style="white-space: pre-line" [innerHTML]="errorObject ? errorObject : (botResponse$ | async)" class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
