@@ -5,13 +5,9 @@ import {Cocktail} from "../cocktails/cocktail.service";
 
 @Injectable({providedIn: 'root'})
 export class BotService {
-  private config: { temperature: number, model: string, headers: HttpHeaders } = {
+  private config: { temperature: number, model: string } = {
     temperature: 0.7,
     model: "gpt-3.5-turbo",
-    headers: new HttpHeaders({
-      'Authorization': 'Bearer ' + environment.botApi,
-      'Content-Type': 'application/json',
-    }),
   }
 
   constructor(private http: HttpClient) {}
@@ -38,7 +34,10 @@ export class BotService {
       "temperature": this.config.temperature,
     }, {
       withCredentials: false,
-      headers: this.config.headers,
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + cocktail.cocktailKey,
+      }),
     });
   }
 }

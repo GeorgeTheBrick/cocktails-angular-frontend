@@ -6,7 +6,6 @@ export const environment = {
   production: false,
   imagePlaceholder: '../../../../assets/loadSpinner.gif',
   requestUrl: 'http://127.0.0.1:2000',
-  botApi: "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",
 };
 
 /*

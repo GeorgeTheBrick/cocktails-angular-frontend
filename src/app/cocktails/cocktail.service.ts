@@ -14,6 +14,7 @@ export interface Cocktail {
   instructions?: string;
   _id: string;
   createdBy?: string;
+  cocktailKey: string;
 }
 
 @Injectable({ providedIn: 'root' })
