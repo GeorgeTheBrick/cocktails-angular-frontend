@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   imagePlaceholder: './assets/loadSpinner.gif',
-  requestUrl: 'cocktails-nodejs-backend-production.up.railway.app',
+  requestUrl: 'https://cocktails-nodejs-backend-production.up.railway.app',
 };
