@@ -95,6 +95,12 @@ export class AuthService implements OnInit {
   }
 
   public autoLogin() {
+  const storedUser = localStorage.getItem('userData');
+
+    if (!storedUser) {
+      return;
+    }
+
     const userData: {
       username: string;
       id: string;
@@ -103,19 +109,30 @@ export class AuthService implements OnInit {
       photo: string;
       token: string;
     } = JSON.parse(localStorage.getItem('userData')!);
-    if (!userData) {
+
+     if (!userData?.expiresIn) {
       return;
     }
+
+    //if (!userData) {
+    //  return;
+    //}
+
     this.user$.next(userData);
     this.checkLogin(userData);
 
-    const currentTime: number = new Date(Date.now()).getTime();
-    const timeUntilExpire: number = userData.expiresIn - currentTime;
-    if (userData.expiresIn > currentTime) {
-      this.autoLogout(timeUntilExpire);
+    //const currentTime: number = new Date(Date.now()).getTime();
+    const timeUntilExpire: number = userData.expiresIn - Date.now();
+    if (timeUntilExpire > 0) {
+    this.autoLogout(timeUntilExpire);
     } else {
-      this.logout().subscribe();
+    this.logout().subscribe();
     }
+    //if (userData.expiresIn > currentTime) {
+   //   this.autoLogout(timeUntilExpire);
+    //} else {
+    //  this.logout().subscribe();
+    //}
   }
 
   private autoLogout(expiresIn: number) {
